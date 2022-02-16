@@ -38,4 +38,15 @@ The user should be able to add the menu items to their cart. When the user press
 
 For example, if there are currently 2 burritos in the cart, and the user adds 2 more, the total should be 4.
 
-> *The number of items in the cart for each menu item should remain when clicking through the the menu. It does not need to persist through a refresh.*
+> *It is okay if the value resets in-between clicking on the menu items! It does not need to save state!*
+---
+# Bonus Challenges!
+
+## Bonus Challenge #1
+The value of the cart for each item should persist when clicking through the various menu items.
+
+## Bonus Challenge #2 
+Calculate the *total cost* of what is currently in the cart and display it somewhere on the page.
+
+## Bonus Challenge #3
+Use PATCH requests to maintain the value of the cart in-between refreshes.
