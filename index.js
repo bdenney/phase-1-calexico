@@ -8,7 +8,7 @@ let cartAmt = document.getElementById("cart-amount")
 let numSpan = document.getElementById("number-in-cart")
 let dishSection = document.getElementById("dish")
 
-let menuItemsArr = [] //"state" -  always should mirror DB
+let menuItemsArr = [] //"state"
 
 const BASE_URL = "http://localhost:3000/"
 
@@ -21,8 +21,8 @@ function renderMenuItem(menuItem) {
 
 function displayItem(menuItem) {
   dishSection.dataset.id = menuItem.id
-    //write helper function
-  let currentId = parseInt(dishSection.dataset.id)
+
+  let currentId = getCurrentId()
   let currentItem = menuItemsArr.find(item => item.id === currentId)
 
   menuItemImg.src = currentItem.image
@@ -37,26 +37,22 @@ function addToCart(e) {
   e.preventDefault()
 
   let amt = parseInt(e.target["cart-amount"].value)
-  amt = amt || 0 
-    //write helper function
-  let currentId = parseInt(dishSection.dataset.id)
-  let currentItem = menuItemsArr.find(item => item.id === currentId)
+  amt = amt || 0
 
-  let idx = menuItemsArr.findIndex(item => item.id === currentId)
+  let currentItem = getCurrentDisplayItem()
+
   let total = currentItem.number_in_bag + amt
-
-  currentItem = { ...currentItem, number_in_bag: total }
-  menuItemsArr.splice(idx, 1, currentItem)
+  handleUpdate(total)
 
   numSpan.textContent = total
   e.target.reset()
 
-  updateDB(total)
   //calculate and put total price somewhere on page
 }
 
-function updateDB(total) {
-  let id = dishSection.dataset.id // write a getDatasetId function
+function handleUpdate(total) {
+  let id = getCurrentId()
+
   fetch(BASE_URL + `menu/${id}`, {
     method: "PATCH",
     headers: {
@@ -67,9 +63,25 @@ function updateDB(total) {
     }),
   })
     .then(r => r.json())
-    .then(data => console.log(data))
+    .then(updatedItem => updateMenuItemArr(updatedItem))
 }
 
+function updateMenuItemArr(updatedItem) {
+  let idx = menuItemsArr.findIndex(item => item.id === updatedItem.id)
+  menuItemsArr.splice(idx, 1, updatedItem)
+}
+
+// HELPER FUNCTIONS
+function getCurrentDisplayItem() {
+  let currentId = getCurrentId()
+  return menuItemsArr.find(item => item.id === currentId)
+}
+
+function getCurrentId() {
+    return parseInt(dishSection.dataset.id)
+}
+
+// INITIALIZE APP
 function app() {
   fetch(BASE_URL + "menu")
     .then(r => r.json())
