@@ -6,7 +6,7 @@
       "image": "./assets/calexico-guac.webp",
       "description": "House-made tortilla chips with fresh daily made guacamole",
       "price": 13,
-      "number_in_bag": 0
+      "number_in_bag": 2
     },
     {
       "id": 2,
@@ -14,7 +14,7 @@
       "image": "./assets/calexico-carne-asada-burrito.webp",
       "description": "Grilled marinated steak, Jack and cheddar cheese, crispy tortilla strips, and chili crema.",
       "price": 14,
-      "number_in_bag": 0
+      "number_in_bag": 40
     },
     {
       "id": 3,

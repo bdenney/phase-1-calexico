@@ -34,7 +34,7 @@
                     <span id="number-in-cart">0</span>
                     <div id="price-of-cart"></div>
                 </h3>
-                <form id="cart-form">
+                <form id="cart-form" onSubmit="return handleClick(event)">
                     <input id="cart-amount" type="text" autocomplete="off" placeholder="Number to add..."/>
                     <input type="submit" value="Add to Cart"></input>
                 </form>

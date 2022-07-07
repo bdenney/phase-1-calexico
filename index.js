@@ -5,6 +5,8 @@ document.addEventListener('DOMContentLoaded', () => {
     initialize()
 })
 
+
+
 function initialize() {
     fetch(menuURL)
         .then(res => res.json())
@@ -12,7 +14,7 @@ function initialize() {
             renderMenuItems(foodItems)
         })
     pageLoad()
-    submitForm()
+    // submitForm()
 }
 
 function renderMenuItems(foodItems) {
@@ -50,30 +52,27 @@ function pageLoad(attribute = 1) {
         })
 }
 
-function submitForm() {
+function handleClick(e) {
     const form = document.querySelector("#cart-form")
-    form.addEventListener('submit', (e) => {
-        e.preventDefault()
-        let span = document.querySelector("#number-in-cart")
-        span.textContent = Number(span.textContent) + Number(form["cart-amount"].value)
-        const dishName = document.querySelector("#dish-name")
-        const dishPrice = document.querySelector("#dish-price")
-        const cartPrice = document.querySelector("#price-of-cart")
-        let attribute = dishName.getAttribute("identification");
-        fetch(`${menuURL}/${attribute}`, {
-            method: 'PATCH',
-            body: JSON.stringify({
-                number_in_bag: Number(span.textContent),
-            }),
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-        })
-        .then(() => {
-            form.reset()
-            cartPrice.textContent = `Your total price is ${Number(dishPrice.textContent.slice(0, -1)) * Number(span.textContent)}$`
-        })
-        
+    e.preventDefault()
+    let span = document.querySelector("#number-in-cart")
+    span.textContent = Number(span.textContent) + Number(form["cart-amount"].value)
+    const dishName = document.querySelector("#dish-name")
+    const dishPrice = document.querySelector("#dish-price")
+    const cartPrice = document.querySelector("#price-of-cart")
+    let attribute = dishName.getAttribute("identification");
+    fetch(`${menuURL}/${attribute}`, {
+        method: 'PATCH',
+        body: JSON.stringify({
+            number_in_bag: Number(span.textContent),
+        }),
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+    })
+    .then(() => {
+        form.reset()
+        cartPrice.textContent = `Your total price is ${Number(dishPrice.textContent.slice(0, -1)) * Number(span.textContent)}$`
     })
 }
